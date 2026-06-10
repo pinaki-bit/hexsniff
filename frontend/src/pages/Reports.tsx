@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { FileText, Download, Trophy, Shield, Activity, Share2 } from 'lucide-react';
 import { useStore } from '../store';
+import { triggerDownload } from '../utils/download';
 import jsPDF from 'jspdf';
 import { m } from 'framer-motion';
 
@@ -142,24 +143,14 @@ export function Reports() {
       a.dst_ip || ''
     ]);
     const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = `hexsniff-alerts-${Date.now()}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    triggerDownload(`hexsniff-alerts-${Date.now()}.csv`, csv);
     setExporting(null);
   };
 
   const exportJSON = () => {
     setExporting('json');
     const data = { exportedAt: new Date().toISOString(), summary: { totalPackets, alertCount: alerts.length, protocolCounts }, packets, alerts };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = `hexsniff-report-${Date.now()}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    triggerDownload(`hexsniff-report-${Date.now()}.json`, JSON.stringify(data, null, 2));
     setExporting(null);
   };
 
@@ -168,13 +159,13 @@ export function Reports() {
     try {
       const res = await fetch('http://127.0.0.1:8000/api/download-pcap');
       if (res.ok) {
-        const blob = await res.blob();
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `hexsniff-capture-${Date.now()}.pcap`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        // @ts-ignore
+        if (window.pywebview && window.pywebview.api) {
+          await triggerDownload(`hexsniff-capture-${Date.now()}.pcap`, new Blob(), true);
+        } else {
+          const blob = await res.blob();
+          await triggerDownload(`hexsniff-capture-${Date.now()}.pcap`, blob, true);
+        }
       }
     } catch (e) {
       console.error(e);
@@ -362,7 +353,8 @@ export function Reports() {
       doc.setFontSize(8);
       doc.text('HexSniff — Enterprise Network Packet Analyzer | Confidential Security Report', 20, 290);
 
-      doc.save(`hexsniff-report-${Date.now()}.pdf`);
+      const pdfBlob = doc.output('blob');
+      triggerDownload(`hexsniff-report-${Date.now()}.pdf`, pdfBlob);
     } catch (e) { console.error(e); }
     setExporting(null);
   };

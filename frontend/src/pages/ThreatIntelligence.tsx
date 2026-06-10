@@ -3,6 +3,7 @@ import { Shield, AlertTriangle, CheckCircle, RefreshCw, Target, Clock, Zap, Uplo
 import { useStore } from '../store';
 import type { Alert } from '../store';
 import { m, AnimatePresence } from 'framer-motion';
+import { triggerDownload } from '../utils/download';
 
 interface IOC {
   id: string;
@@ -83,13 +84,8 @@ export function ThreatIntelligence() {
     try {
       const res = await fetch('http://127.0.0.1:8000/api/iocs/export');
       if (res.ok) {
-        const blob = await res.blob();
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `threat-intel-export-${Date.now()}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        const data = await res.json();
+        triggerDownload(`threat-intel-export-${Date.now()}.json`, JSON.stringify(data, null, 2));
       }
     } catch (e) {
       console.error('Export failed:', e);

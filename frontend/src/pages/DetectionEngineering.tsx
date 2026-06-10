@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Target, BarChart2, CheckCircle, AlertTriangle, ShieldAlert, History, Download, Activity } from 'lucide-react';
 import { useStore, store } from '../store';
 import { m } from 'framer-motion';
+import { triggerDownload } from '../utils/download';
 
 // ── 3D Threat Matrix Animation ──
 function ThreatMatrixCanvas({ coveragePct }: { coveragePct: number }) {
@@ -195,11 +196,7 @@ export function DetectionEngineering() {
       lines.push(`[${r.rule_name}] Hits: ${r.trigger_count + r.validation_hits} | Avg Conf: ${r.confidence_avg}% | Low Conf/FP: ${r.low_conf_count}`);
     });
 
-    const blob = new Blob([lines.join("\n")], { type: 'text/plain' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `hexsniff-coverage-${Date.now()}.txt`;
-    a.click();
+    triggerDownload(`hexsniff-coverage-${Date.now()}.txt`, lines.join('\n'));
   };
 
   if (!coverageStats) {
