@@ -1,6 +1,7 @@
 <div align="center">
   <h1>HexSniff NDR</h1>
   <p><strong>Enterprise Network Detection & Response Platform</strong></p>
+  <p><i>Developed by <b>Pinaki</b></i></p>
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
   [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)

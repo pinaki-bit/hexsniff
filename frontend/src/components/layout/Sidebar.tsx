@@ -132,6 +132,9 @@ export function Sidebar() {
                     <div className="text-[10px] text-emerald truncate font-mono uppercase tracking-widest text-glow-emerald">SYS_ONLINE</div>
                   </div>
                 </div>
+                <div className="mt-3 text-center text-[10px] text-text-muted font-mono tracking-widest opacity-50">
+                  DEV: PINAKI
+                </div>
               </div>
             </m.div>
           )}
