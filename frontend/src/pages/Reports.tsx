@@ -157,6 +157,23 @@ export function Reports() {
     setExporting(null);
   };
 
+  const exportPCAP = async () => {
+    setExporting('pcap');
+    try {
+      const res = await fetch('http://127.0.0.1:8000/api/download-pcap');
+      if (res.ok) {
+        const blob = await res.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `hexsniff-capture-${Date.now()}.pcap`;
+        a.click();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    setExporting(null);
+  };
+
   const exportPDF = async () => {
     setExporting('pdf');
     try {
@@ -393,7 +410,7 @@ export function Reports() {
           </div>
           <div className="p-5 flex flex-col gap-4">
             {[
-              { id: 'pcap', label: 'Raw Wireshark PCAP', desc: 'Standard packet capture trace file in binary format. Export capture sessions to review raw bytes, payloads, and protocols inside Wireshark.', color: 'purple', action: () => window.location.href = 'http://127.0.0.1:8000/api/download-pcap' },
+              { id: 'pcap', label: 'Raw Wireshark PCAP', desc: 'Standard packet capture trace file in binary format. Export capture sessions to review raw bytes, payloads, and protocols inside Wireshark.', color: 'purple', action: exportPCAP },
               { id: 'pdf', label: 'PDF Security Report', desc: 'Professional report with summary, alerts table, and statistics. Ideal for presentations and management briefings.', color: 'red', action: exportPDF },
               { id: 'csv', label: 'CSV Packet Log', desc: 'All captured alerts in CSV format. Import into Excel, Splunk, or any SIEM for further analysis.', color: 'green', action: exportCSV },
               { id: 'json', label: 'JSON Full Dump', desc: 'Complete JSON export of packets, alerts, and metadata. Machine-readable for automated processing and APIs.', color: 'blue', action: exportJSON },

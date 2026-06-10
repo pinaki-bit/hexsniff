@@ -79,8 +79,19 @@ export function ThreatIntelligence() {
     }
   };
 
-  const handleExport = () => {
-    window.open('http://127.0.0.1:8000/api/iocs/export', '_blank');
+  const handleExport = async () => {
+    try {
+      const res = await fetch('http://127.0.0.1:8000/api/iocs/export');
+      if (res.ok) {
+        const blob = await res.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `threat-intel-export-${Date.now()}.json`;
+        a.click();
+      }
+    } catch (e) {
+      console.error('Export failed:', e);
+    }
   };
 
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
