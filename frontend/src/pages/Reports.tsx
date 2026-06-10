@@ -144,7 +144,10 @@ export function Reports() {
     const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = `hexsniff-alerts-${Date.now()}.csv`; a.click();
+    a.download = `hexsniff-alerts-${Date.now()}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     setExporting(null);
   };
 
@@ -153,7 +156,10 @@ export function Reports() {
     const data = { exportedAt: new Date().toISOString(), summary: { totalPackets, alertCount: alerts.length, protocolCounts }, packets, alerts };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = `hexsniff-report-${Date.now()}.json`; a.click();
+    a.download = `hexsniff-report-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     setExporting(null);
   };
 
@@ -166,7 +172,9 @@ export function Reports() {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = `hexsniff-capture-${Date.now()}.pcap`;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
       }
     } catch (e) {
       console.error(e);
