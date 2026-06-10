@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { Upload, ShieldCheck, Bug, Activity, FileJson, FileText, ChevronDown, ChevronRight, Hash, Eye, Target } from 'lucide-react';
+import { Activity, Target, FileText, FileJson, Upload, ShieldCheck, Bug, ChevronDown, ChevronRight, Hash, Eye } from 'lucide-react';
+import { triggerDownload } from '../utils/download';
 import { m, AnimatePresence } from 'framer-motion';
 
 // ── 3D Containment Sandbox Animation ──
@@ -199,12 +200,7 @@ export function DetectionValidationLab() {
   const handleExportJson = (session: ValidationSession) => {
     const dataStr = JSON.stringify(session, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `validation_${session.session_id}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
+    triggerDownload(`validation_${session.session_id}.json`, blob);
   };
 
   const handleExportCsv = (session: ValidationSession) => {
@@ -225,12 +221,7 @@ export function DetectionValidationLab() {
     ]);
     const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `validation_${session.session_id}.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
+    triggerDownload(`validation_${session.session_id}.csv`, blob);
   };
 
   const handleExportPdf = (session: ValidationSession) => {

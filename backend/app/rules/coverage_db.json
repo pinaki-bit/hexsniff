@@ -12,10 +12,10 @@
     "T1071": {
       "technique_id": "T1071",
       "tactic": "Command and Control",
-      "detections": 361,
+      "detections": 424,
       "evidence_packets": 36,
       "validation_sessions": 1,
-      "confidence_sum": 18122,
+      "confidence_sum": 21272,
       "confidence_avg": 50.2
     },
     "T1190": {
@@ -39,19 +39,19 @@
     "T1552": {
       "technique_id": "T1552",
       "tactic": "Credential Access",
-      "detections": 1,
+      "detections": 2,
       "evidence_packets": 0,
       "validation_sessions": 0,
-      "confidence_sum": 50,
+      "confidence_sum": 100,
       "confidence_avg": 50.0
     },
     "T1046": {
       "technique_id": "T1046",
       "tactic": "Reconnaissance",
-      "detections": 28,
+      "detections": 29,
       "evidence_packets": 0,
       "validation_sessions": 0,
-      "confidence_sum": 1400,
+      "confidence_sum": 1450,
       "confidence_avg": 50.0
     }
   },
@@ -67,10 +67,10 @@
     },
     "Beaconing Detection": {
       "rule_name": "Beaconing Detection",
-      "trigger_count": 352,
+      "trigger_count": 415,
       "validation_hits": 8,
       "evidence_packets": 36,
-      "confidence_sum": 18072,
+      "confidence_sum": 21222,
       "confidence_avg": 50.2,
       "low_conf_count": 5
     },
@@ -112,19 +112,19 @@
     },
     "Credential Leak": {
       "rule_name": "Credential Leak",
-      "trigger_count": 1,
+      "trigger_count": 2,
       "validation_hits": 0,
       "evidence_packets": 0,
-      "confidence_sum": 50,
+      "confidence_sum": 100,
       "confidence_avg": 50.0,
       "low_conf_count": 0
     },
     "Port Scanning": {
       "rule_name": "Port Scanning",
-      "trigger_count": 28,
+      "trigger_count": 29,
       "validation_hits": 0,
       "evidence_packets": 0,
-      "confidence_sum": 1400,
+      "confidence_sum": 1450,
       "confidence_avg": 50.0,
       "low_conf_count": 0
     }
@@ -146,5 +146,5 @@
     }
   ],
   "total_validation_runs": 2,
-  "total_live_alerts": 389
+  "total_live_alerts": 454
 }

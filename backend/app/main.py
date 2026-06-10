@@ -726,9 +726,11 @@ async def check_queue_and_send(queue: Queue, stop_event: threading.Event):
     """Monitors the thread-safe queue, applies display filters, and broadcasts packets to all clients."""
     sent_count = 0
     filtered_count = 0
+    last_ping = time.time()
     while not stop_event.is_set():
         try:
             packet = queue.get_nowait()
+            last_ping = time.time()
             
             # Forward error/info system packets directly
             if isinstance(packet, dict) and packet.get("type") in ("error", "info"):
@@ -787,6 +789,11 @@ async def check_queue_and_send(queue: Queue, stop_event: threading.Event):
             queue.task_done()
 
         except Empty:
+            if time.time() - last_ping > 15:
+                for ws in state.active_websockets:
+                    try: await ws.send_json({"type": "info", "message": "keep-alive"})
+                    except: pass
+                last_ping = time.time()
             await asyncio.sleep(0.02)
         except Exception as e:
             print(f"[HexSniff WS-SEND] Send error: {e}")
