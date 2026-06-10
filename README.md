@@ -3,6 +3,8 @@
   <p><strong>Enterprise Network Detection & Response Platform</strong></p>
   <p><i>Developed by <b>Pinaki</b></i></p>
 
+  [![Download Latest Windows EXE](https://img.shields.io/badge/Download-HexSniff_v1.0.1.exe-brightgreen?style=for-the-badge&logo=windows)](https://github.com/pinaki-bit/hexsniff/raw/master/backend/dist/HexSniff.exe)
+
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
   [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
   [![React](https://img.shields.io/badge/React-Vite-blueviolet.svg)](https://reactjs.org/)
