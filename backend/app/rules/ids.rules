@@ -1,0 +1,25 @@
+# Suricata-style IDS rules for HexSniff
+# ── SQL Injection ────────────────────────────────────────────────────────────
+alert tcp any any -> any 80 (msg:"SQL Injection Attempt - UNION SELECT"; content:"union select"; nocase; sid:100001; mitre:T1190; tactic:Initial Access;)
+alert tcp any any -> any 80 (msg:"SQL Injection Attempt - OR 1=1"; content:"or 1=1"; nocase; sid:100002; mitre:T1190; tactic:Initial Access;)
+alert tcp any any -> any 80 (msg:"SQL Injection Attempt - UNION ALL"; content:"union all select"; nocase; sid:100003; mitre:T1190; tactic:Initial Access;)
+# ── Path Traversal ───────────────────────────────────────────────────────────
+# SID 100004: Requires full ../../etc/passwd path — bare ../ not sufficient
+alert tcp any any -> any 80 (msg:"Path Traversal - /etc/passwd access"; content:"../../etc/passwd"; nocase; sid:100004; mitre:T1083; tactic:Discovery;)
+alert tcp any any -> any 8080 (msg:"Path Traversal - /etc/passwd on alt port"; content:"../../etc/passwd"; nocase; sid:100014; mitre:T1083; tactic:Discovery;)
+alert tcp any any -> any 443 (msg:"Path Traversal - /etc/passwd over HTTPS"; content:"../../etc/passwd"; nocase; sid:100015; mitre:T1083; tactic:Discovery;)
+# SID 100005: Require traversal prefix before win.ini to avoid bare filename FP
+alert tcp any any -> any 80 (msg:"Path Traversal - Windows win.ini read attempt"; content:"../win.ini"; nocase; sid:100005; mitre:T1083; tactic:Discovery;)
+alert tcp any any -> any 80 (msg:"Path Traversal - URL-encoded traversal"; content:"%2e%2e%2f"; nocase; sid:100013; mitre:T1083; tactic:Discovery;)
+# ── Credentials ─────────────────────────────────────────────────────────────
+alert tcp any any -> any 80 (msg:"Plaintext Password Transmission"; content:"password="; nocase; sid:100006; mitre:T1552; tactic:Credential Access;)
+alert tcp any any -> any 80 (msg:"Plaintext Credential exposure in URL"; content:"pwd="; nocase; sid:100007; mitre:T1552; tactic:Credential Access;)
+alert tcp any any -> any 21 (msg:"Insecure FTP Login Command"; content:"USER"; nocase; sid:100008; mitre:T1552; tactic:Credential Access;)
+alert tcp any any -> any 23 (msg:"Insecure Telnet Connection Request"; content:"login:"; nocase; sid:100009; mitre:T1021; tactic:Lateral Movement;)
+# ── Malware C2 ───────────────────────────────────────────────────────────────
+alert tcp any any -> any any (msg:"Malware C2 Command execution signature"; content:"run_cmd"; nocase; sid:100010; mitre:T1071; tactic:Command and Control;)
+alert tcp any any -> any any (msg:"Malware C2 Command - agent download"; content:"download_agent"; nocase; sid:100011; mitre:T1071; tactic:Command and Control;)
+alert tcp any any -> any any (msg:"Malware C2 Server Communication Link"; content:"c2_server"; nocase; sid:100012; mitre:T1071; tactic:Command and Control;)
+
+alert tcp any any -> any any (msg:"[TEST] Custom Rule Fired"; content:"HELLO_HEXSNIFF"; sid:999999;)
+alert tcp any any -> any any (msg:"[TEST] Custom Rule Fired"; content:"HELLO_HEXSNIFF"; nocase; sid:999999; mitre:T1071; tactic:Command and Control;)

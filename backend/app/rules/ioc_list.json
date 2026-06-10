@@ -1,0 +1,161 @@
+[
+  {
+    "id": "feodo-27-133-154-218",
+    "value": "27.133.154.218",
+    "type": "IP",
+    "severity": "Critical",
+    "source": "Feodo Tracker",
+    "description": "QakBot C2 server (offline). Country: JP. Port: 443.",
+    "mitre": "T1071.001",
+    "tags": [
+      "QakBot",
+      "C2",
+      "Botnet"
+    ],
+    "synced_at": 1781027723,
+    "first_seen": 1780932264,
+    "last_seen": 1781027723,
+    "confidence": 95,
+    "active": true,
+    "hit_count": 0
+  },
+  {
+    "id": "feodo-162-243-103-246",
+    "value": "162.243.103.246",
+    "type": "IP",
+    "severity": "Critical",
+    "source": "Feodo Tracker",
+    "description": "Emotet C2 server (offline). Country: US. Port: 8080.",
+    "mitre": "T1071.001",
+    "tags": [
+      "Emotet",
+      "C2",
+      "Botnet"
+    ],
+    "synced_at": 1781027723,
+    "first_seen": 1780932264,
+    "last_seen": 1781027723,
+    "confidence": 95,
+    "active": true,
+    "hit_count": 0
+  },
+  {
+    "id": "feodo-50-16-16-211",
+    "value": "50.16.16.211",
+    "type": "IP",
+    "severity": "Critical",
+    "source": "Feodo Tracker",
+    "description": "QakBot C2 server (online). Country: US. Port: 443.",
+    "mitre": "T1071.001",
+    "tags": [
+      "QakBot",
+      "C2",
+      "Botnet"
+    ],
+    "synced_at": 1781027723,
+    "first_seen": 1780932264,
+    "last_seen": 1781027723,
+    "confidence": 95,
+    "active": true,
+    "hit_count": 0
+  },
+  {
+    "id": "feodo-34-204-119-63",
+    "value": "34.204.119.63",
+    "type": "IP",
+    "severity": "Critical",
+    "source": "Feodo Tracker",
+    "description": "QakBot C2 server (offline). Country: US. Port: 443.",
+    "mitre": "T1071.001",
+    "tags": [
+      "QakBot",
+      "C2",
+      "Botnet"
+    ],
+    "synced_at": 1781027723,
+    "first_seen": 1780932264,
+    "last_seen": 1781027723,
+    "confidence": 95,
+    "active": true,
+    "hit_count": 0
+  },
+  {
+    "id": "feodo-178-62-3-223",
+    "value": "178.62.3.223",
+    "type": "IP",
+    "severity": "Critical",
+    "source": "Feodo Tracker",
+    "description": "QakBot C2 server (offline). Country: GB. Port: 443.",
+    "mitre": "T1071.001",
+    "tags": [
+      "QakBot",
+      "C2",
+      "Botnet"
+    ],
+    "synced_at": 1781027723,
+    "first_seen": 1780932264,
+    "last_seen": 1781027723,
+    "confidence": 95,
+    "active": true,
+    "hit_count": 0
+  },
+  {
+    "id": "urlhaus-312096150",
+    "value": "182.126.176.23",
+    "type": "Domain",
+    "severity": "High",
+    "source": "URLhaus",
+    "description": "Malware distribution host (online). Threat: malware_download.",
+    "mitre": "T1105",
+    "tags": [
+      "malware",
+      "distribution"
+    ],
+    "synced_at": 1780933293,
+    "first_seen": 1780933266,
+    "last_seen": 1780933293,
+    "confidence": 85,
+    "active": true,
+    "hit_count": 0
+  },
+  {
+    "id": "urlhaus-790959462",
+    "value": "27.207.125.194",
+    "type": "Domain",
+    "severity": "High",
+    "source": "URLhaus",
+    "description": "Malware distribution host (online). Threat: malware_download.",
+    "mitre": "T1105",
+    "tags": [
+      "32-bit",
+      "elf",
+      "mips"
+    ],
+    "synced_at": 1780937859,
+    "first_seen": 1780937856,
+    "last_seen": 1780937859,
+    "confidence": 85,
+    "active": true,
+    "hit_count": 0
+  },
+  {
+    "id": "urlhaus-217625728",
+    "value": "123.7.153.220",
+    "type": "Domain",
+    "severity": "High",
+    "source": "URLhaus",
+    "description": "Malware distribution host (online). Threat: malware_download.",
+    "mitre": "T1105",
+    "tags": [
+      "32-bit",
+      "elf",
+      "mips"
+    ],
+    "synced_at": 1781027723,
+    "first_seen": 1781027723,
+    "last_seen": 1781027723,
+    "confidence": 85,
+    "active": true,
+    "hit_count": 0
+  }
+]

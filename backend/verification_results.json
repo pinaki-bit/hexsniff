@@ -1,0 +1,215 @@
+{
+    "db_path": "C:\\Users\\pinak\\Desktop\\hexsniff\\backend\\temp\\hexsniff_cases.db",
+    "db_schema": {
+        "cases": "CREATE TABLE cases (\n                    case_id TEXT PRIMARY KEY,\n                    title TEXT,\n                    status TEXT,\n                    severity TEXT,\n                    notes TEXT,\n                    tags TEXT,\n                    created_at REAL,\n                    updated_at REAL\n                )",
+        "case_evidence": "CREATE TABLE case_evidence (\n                    evidence_id TEXT PRIMARY KEY,\n                    case_id TEXT,\n                    packet_id TEXT,\n                    alert_id TEXT,\n                    ioc TEXT,\n                    mitre_technique TEXT,\n                    mitre_tactic TEXT,\n                    FOREIGN KEY(case_id) REFERENCES cases(case_id)\n                )",
+        "case_timeline": "CREATE TABLE case_timeline (\n                    event_id TEXT PRIMARY KEY,\n                    case_id TEXT,\n                    timestamp REAL,\n                    event_type TEXT,\n                    description TEXT,\n                    FOREIGN KEY(case_id) REFERENCES cases(case_id)\n                )",
+        "sqlite_autoindex_cases_1": null,
+        "sqlite_autoindex_case_evidence_1": null,
+        "sqlite_autoindex_case_timeline_1": null,
+        "idx_case_evidence_case_id": "CREATE INDEX idx_case_evidence_case_id ON case_evidence(case_id)",
+        "idx_case_timeline_case_id": "CREATE INDEX idx_case_timeline_case_id ON case_timeline(case_id)"
+    },
+    "api_test": [
+        {
+            "method": "POST",
+            "endpoint": "/api/cases",
+            "status": 200,
+            "request": "{\"title\": \"API Test Case\", \"status\": \"Open\", \"severity\": \"High\"}",
+            "response": {
+                "case_id": "9276e962-9410-4869-83fb-2db443a7ab06",
+                "title": "API Test Case",
+                "status": "Open",
+                "severity": "High",
+                "notes": "",
+                "tags": "",
+                "created_at": 1780972390.0550706,
+                "updated_at": 1780972390.0596874,
+                "evidence": [],
+                "timeline": [
+                    {
+                        "event_id": "197e03b3-bbc7-4d35-95c2-b95595590b4a",
+                        "case_id": "9276e962-9410-4869-83fb-2db443a7ab06",
+                        "timestamp": 1780972390.0596874,
+                        "event_type": "CASE_CREATED",
+                        "description": "Case 'API Test Case' created with status Open"
+                    }
+                ]
+            }
+        },
+        {
+            "method": "GET",
+            "endpoint": "/api/cases",
+            "status": 200,
+            "request": "",
+            "response": [
+                {
+                    "case_id": "9276e962-9410-4869-83fb-2db443a7ab06",
+                    "title": "API Test Case",
+                    "status": "Open",
+                    "severity": "High",
+                    "tags": "",
+                    "created_at": 1780972390.0550706,
+                    "updated_at": 1780972390.0596874
+                }
+            ]
+        },
+        {
+            "method": "GET",
+            "endpoint": "/api/cases/9276e962-9410-4869-83fb-2db443a7ab06",
+            "status": 200,
+            "request": "",
+            "response": {
+                "case_id": "9276e962-9410-4869-83fb-2db443a7ab06",
+                "title": "API Test Case",
+                "status": "Open",
+                "severity": "High",
+                "notes": "",
+                "tags": "",
+                "created_at": 1780972390.0550706,
+                "updated_at": 1780972390.0596874,
+                "evidence": [],
+                "timeline": [
+                    {
+                        "event_id": "197e03b3-bbc7-4d35-95c2-b95595590b4a",
+                        "case_id": "9276e962-9410-4869-83fb-2db443a7ab06",
+                        "timestamp": 1780972390.0596874,
+                        "event_type": "CASE_CREATED",
+                        "description": "Case 'API Test Case' created with status Open"
+                    }
+                ]
+            }
+        },
+        {
+            "method": "PUT",
+            "endpoint": "/api/cases/9276e962-9410-4869-83fb-2db443a7ab06",
+            "status": 200,
+            "request": "{\"status\": \"Closed\"}",
+            "response": {
+                "case_id": "9276e962-9410-4869-83fb-2db443a7ab06",
+                "title": "API Test Case",
+                "status": "Closed",
+                "severity": "High",
+                "notes": "",
+                "tags": "",
+                "created_at": 1780972390.0550706,
+                "updated_at": 1780972390.071665,
+                "evidence": [],
+                "timeline": [
+                    {
+                        "event_id": "702e878b-bc3f-4af2-98aa-137bb999651f",
+                        "case_id": "9276e962-9410-4869-83fb-2db443a7ab06",
+                        "timestamp": 1780972390.071665,
+                        "event_type": "STATUS_CHANGED",
+                        "description": "Status changed from Open to Closed"
+                    },
+                    {
+                        "event_id": "197e03b3-bbc7-4d35-95c2-b95595590b4a",
+                        "case_id": "9276e962-9410-4869-83fb-2db443a7ab06",
+                        "timestamp": 1780972390.0596874,
+                        "event_type": "CASE_CREATED",
+                        "description": "Case 'API Test Case' created with status Open"
+                    }
+                ]
+            }
+        },
+        {
+            "method": "DELETE",
+            "endpoint": "/api/cases/9276e962-9410-4869-83fb-2db443a7ab06",
+            "status": 200,
+            "request": "",
+            "response": {
+                "success": true
+            }
+        }
+    ],
+    "persistence": {
+        "case_id": "a83ddc4a-30d6-4936-8e49-05ea4dadcf54",
+        "title": "Case A",
+        "status": "In Progress",
+        "severity": "High",
+        "notes": "Some important notes",
+        "tags": "Test,Persist",
+        "created_at": 1780972390.0858138,
+        "updated_at": 1780972390.09581,
+        "evidence": [],
+        "timeline": [
+            {
+                "event_id": "f61d408b-d411-4e03-b973-3858bd9ecb8f",
+                "case_id": "a83ddc4a-30d6-4936-8e49-05ea4dadcf54",
+                "timestamp": 1780972390.09581,
+                "event_type": "STATUS_CHANGED",
+                "description": "Status changed from Open to In Progress"
+            },
+            {
+                "event_id": "a79c243e-3385-46f5-b22e-2a4a328bf378",
+                "case_id": "a83ddc4a-30d6-4936-8e49-05ea4dadcf54",
+                "timestamp": 1780972390.09581,
+                "event_type": "NOTES_UPDATED",
+                "description": "Analyst notes were updated"
+            },
+            {
+                "event_id": "1cdf9331-b661-487a-83e6-ed7ce038ccf4",
+                "case_id": "a83ddc4a-30d6-4936-8e49-05ea4dadcf54",
+                "timestamp": 1780972390.089878,
+                "event_type": "CASE_CREATED",
+                "description": "Case 'Case A' created with status Open"
+            }
+        ]
+    },
+    "evidence": [
+        {
+            "evidence_id": "10231128-ac10-4997-a74d-6b868dd9185f",
+            "case_id": "EV_TEST_CASE",
+            "packet_id": "pkt_123",
+            "alert_id": "alert_456",
+            "ioc": "192.168.1.100",
+            "mitre_technique": "T1059",
+            "mitre_tactic": ""
+        }
+    ],
+    "timeline": [
+        {
+            "event_id": "9182cab5-4cbf-4ad1-8309-9569afac7c91",
+            "case_id": "TL_TEST_CASE",
+            "timestamp": 1780972390.143741,
+            "event_type": "EVIDENCE_ADDED",
+            "description": "Attached Evidence: Packet pkt_1"
+        },
+        {
+            "event_id": "d7892d77-90f2-4fa4-91ca-0ff1d6162352",
+            "case_id": "TL_TEST_CASE",
+            "timestamp": 1780972390.136323,
+            "event_type": "NOTES_UPDATED",
+            "description": "Analyst notes were updated"
+        },
+        {
+            "event_id": "c775b7fe-98e2-4cef-b47a-c3bd67dc8931",
+            "case_id": "TL_TEST_CASE",
+            "timestamp": 1780972390.128402,
+            "event_type": "SEVERITY_CHANGED",
+            "description": "Severity changed from Medium to Critical"
+        },
+        {
+            "event_id": "bc0b98e6-7751-47ee-bcc3-c9f53b74d7f2",
+            "case_id": "TL_TEST_CASE",
+            "timestamp": 1780972390.1221833,
+            "event_type": "STATUS_CHANGED",
+            "description": "Status changed from Open to In Progress"
+        },
+        {
+            "event_id": "03476050-b58c-4e09-9aa3-f900dad45b16",
+            "case_id": "TL_TEST_CASE",
+            "timestamp": 1780972390.1191278,
+            "event_type": "CASE_CREATED",
+            "description": "Case 'Timeline Test' created with status Open"
+        }
+    ],
+    "latency_ms": 7.2689056396484375,
+    "load_100_create_ms": 767.0407295227051,
+    "load_100_query_ms": 3.021240234375,
+    "load_100_update_ms": 772.3093032836914,
+    "load_1000_create_ms": 7936.548471450806,
+    "load_1000_query_ms": 3.3349990844726562,
+    "load_1000_update_ms": 7518.714427947998
+}

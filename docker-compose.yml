@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hexsniff-backend
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - ./backend/temp:/app/temp
+      - ./backend/databases:/app/databases
+    env_file:
+      - .env
+    # Capabilities required for packet sniffing inside Docker
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    # Optional: For native Linux live packet sniffing, uncomment the line below.
+    # Note: If uncommented, ports mapping above is ignored by Docker.
+    # network_mode: "host" 
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: hexsniff-frontend
+    ports:
+      - "${FRONTEND_PORT:-5173}:5173"
+    environment:
+      # Expose the backend URL to the Vite frontend
+      - VITE_API_BASE_URL=http://localhost:${BACKEND_PORT:-8000}
+    depends_on:
+      - backend
+    restart: unless-stopped

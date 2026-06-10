@@ -1,0 +1,150 @@
+{
+  "techniques": {
+    "T1071.004": {
+      "technique_id": "T1071.004",
+      "tactic": "Command and Control",
+      "detections": 5,
+      "evidence_packets": 0,
+      "validation_sessions": 0,
+      "confidence_sum": 250,
+      "confidence_avg": 50.0
+    },
+    "T1071": {
+      "technique_id": "T1071",
+      "tactic": "Command and Control",
+      "detections": 311,
+      "evidence_packets": 36,
+      "validation_sessions": 1,
+      "confidence_sum": 15622,
+      "confidence_avg": 50.2
+    },
+    "T1190": {
+      "technique_id": "T1190",
+      "tactic": "Initial Access",
+      "detections": 1,
+      "evidence_packets": 0,
+      "validation_sessions": 0,
+      "confidence_sum": 50,
+      "confidence_avg": 50.0
+    },
+    "T1071.001": {
+      "technique_id": "T1071.001",
+      "tactic": "Command and Control",
+      "detections": 1,
+      "evidence_packets": 0,
+      "validation_sessions": 0,
+      "confidence_sum": 95,
+      "confidence_avg": 95.0
+    },
+    "T1552": {
+      "technique_id": "T1552",
+      "tactic": "Credential Access",
+      "detections": 1,
+      "evidence_packets": 0,
+      "validation_sessions": 0,
+      "confidence_sum": 50,
+      "confidence_avg": 50.0
+    },
+    "T1046": {
+      "technique_id": "T1046",
+      "tactic": "Reconnaissance",
+      "detections": 12,
+      "evidence_packets": 0,
+      "validation_sessions": 0,
+      "confidence_sum": 600,
+      "confidence_avg": 50.0
+    }
+  },
+  "rules": {
+    "DNS Tunneling": {
+      "rule_name": "DNS Tunneling",
+      "trigger_count": 5,
+      "validation_hits": 0,
+      "evidence_packets": 0,
+      "confidence_sum": 250,
+      "confidence_avg": 50.0,
+      "low_conf_count": 0
+    },
+    "Beaconing Detection": {
+      "rule_name": "Beaconing Detection",
+      "trigger_count": 302,
+      "validation_hits": 8,
+      "evidence_packets": 36,
+      "confidence_sum": 15572,
+      "confidence_avg": 50.2,
+      "low_conf_count": 5
+    },
+    "SQL Injection": {
+      "rule_name": "SQL Injection",
+      "trigger_count": 1,
+      "validation_hits": 0,
+      "evidence_packets": 0,
+      "confidence_sum": 50,
+      "confidence_avg": 50.0,
+      "low_conf_count": 0
+    },
+    "Matched IOC Indicator": {
+      "rule_name": "Matched IOC Indicator",
+      "trigger_count": 1,
+      "validation_hits": 0,
+      "evidence_packets": 0,
+      "confidence_sum": 95,
+      "confidence_avg": 95.0,
+      "low_conf_count": 0
+    },
+    "[TEST] Custom Rule Fired": {
+      "rule_name": "[TEST] Custom Rule Fired",
+      "trigger_count": 0,
+      "validation_hits": 1,
+      "evidence_packets": 1,
+      "confidence_sum": 50,
+      "confidence_avg": 50.0,
+      "low_conf_count": 1
+    },
+    "Malware C2 Command": {
+      "rule_name": "Malware C2 Command",
+      "trigger_count": 1,
+      "validation_hits": 0,
+      "evidence_packets": 0,
+      "confidence_sum": 50,
+      "confidence_avg": 50.0,
+      "low_conf_count": 0
+    },
+    "Credential Leak": {
+      "rule_name": "Credential Leak",
+      "trigger_count": 1,
+      "validation_hits": 0,
+      "evidence_packets": 0,
+      "confidence_sum": 50,
+      "confidence_avg": 50.0,
+      "low_conf_count": 0
+    },
+    "Port Scanning": {
+      "rule_name": "Port Scanning",
+      "trigger_count": 12,
+      "validation_hits": 0,
+      "evidence_packets": 0,
+      "confidence_sum": 600,
+      "confidence_avg": 50.0,
+      "low_conf_count": 0
+    }
+  },
+  "history": [
+    {
+      "session_id": "val_9ea2752b",
+      "date": 1781070957,
+      "detections": 8,
+      "techniques": 1,
+      "coverage_impact": 1
+    },
+    {
+      "session_id": "val_d5073547",
+      "date": 1781007731,
+      "detections": 1,
+      "techniques": 0,
+      "coverage_impact": 0
+    }
+  ],
+  "total_validation_runs": 2,
+  "total_live_alerts": 323
+}
