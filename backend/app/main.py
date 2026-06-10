@@ -7,8 +7,10 @@ import threading
 import time
 from queue import Queue, Empty
 from typing import Dict, List, Optional, Any
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import uuid
@@ -1026,6 +1028,30 @@ async def websocket_endpoint(websocket: WebSocket):
         if websocket in state.active_websockets:
             state.active_websockets.remove(websocket)
         print(f"Client removed. Active clients: {len(state.active_websockets)}")
+
+# ------------------------------------------------------------------------------
+# SPA STATIC ASSETS FALLBACK (For Desktop Build)
+# ------------------------------------------------------------------------------
+
+# Determine base dir dynamically to support PyInstaller _MEIPASS
+import sys
+if hasattr(sys, '_MEIPASS'):
+    base_dir = sys._MEIPASS
+else:
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+frontend_dist = os.path.join(base_dir, "frontend", "dist")
+
+if os.path.exists(frontend_dist) and os.path.isdir(frontend_dist):
+    app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        # Serve exact file if it exists, otherwise return index.html for React Router
+        target_path = os.path.join(frontend_dist, full_path)
+        if os.path.exists(target_path) and os.path.isfile(target_path):
+            return FileResponse(target_path)
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
 
 if __name__ == "__main__":
     import uvicorn

@@ -12,10 +12,10 @@
     "T1071": {
       "technique_id": "T1071",
       "tactic": "Command and Control",
-      "detections": 323,
+      "detections": 361,
       "evidence_packets": 36,
       "validation_sessions": 1,
-      "confidence_sum": 16222,
+      "confidence_sum": 18122,
       "confidence_avg": 50.2
     },
     "T1190": {
@@ -67,10 +67,10 @@
     },
     "Beaconing Detection": {
       "rule_name": "Beaconing Detection",
-      "trigger_count": 314,
+      "trigger_count": 352,
       "validation_hits": 8,
       "evidence_packets": 36,
-      "confidence_sum": 16172,
+      "confidence_sum": 18072,
       "confidence_avg": 50.2,
       "low_conf_count": 5
     },
@@ -146,5 +146,5 @@
     }
   ],
   "total_validation_runs": 2,
-  "total_live_alerts": 351
+  "total_live_alerts": 389
 }

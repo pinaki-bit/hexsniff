@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { m } from 'framer-motion';
-import { Database, FolderOpen, ShieldAlert, Clock, Tag, FileText, Search, Activity, ChevronRight } from 'lucide-react';
+import { Database, FolderOpen, ShieldAlert, Clock, Tag, FileText, Search, Activity } from 'lucide-react';
 
 interface CaseInfo {
   case_id: string;

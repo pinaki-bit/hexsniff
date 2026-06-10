@@ -4,7 +4,7 @@ import {
   Terminal, Database, Search, Filter, X, Shield, ShieldAlert, FileCode2
 } from 'lucide-react';
 import { useStore, store } from '../store';
-import { m, AnimatePresence } from 'framer-motion';
+import { m } from 'framer-motion';
 
 // ── Control Panel ─────────────────────────────────────────────────────────────
 function ControlPanel() {
@@ -182,7 +182,7 @@ function PacketTable({ filter }: { filter: string }) {
               </tr>
             </thead>
             <tbody className="font-mono">
-              {filtered.map((pkt, i) => {
+              {filtered.map((pkt, _i) => {
                 const alert = pkt.alerts?.length > 0;
                 const sel = selectedPacket?.id === pkt.id;
                 return (
