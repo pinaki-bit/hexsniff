@@ -1042,6 +1042,23 @@ else:
 
 frontend_dist = os.path.join(base_dir, "frontend", "dist")
 
+@app.get("/debug_paths")
+def get_debug_paths():
+    import glob
+    try:
+        meipass = sys._MEIPASS
+    except:
+        meipass = "None"
+    
+    files = glob.glob(os.path.join(base_dir, "**"), recursive=True)
+    return {
+        "base_dir": base_dir,
+        "frontend_dist": frontend_dist,
+        "exists": os.path.exists(frontend_dist),
+        "meipass": meipass,
+        "cwd": os.getcwd()
+    }
+
 if os.path.exists(frontend_dist) and os.path.isdir(frontend_dist):
     app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
 
