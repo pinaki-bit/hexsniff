@@ -14,6 +14,10 @@ function ControlPanel() {
   const [uploading, setUploading] = useState(false);
   const [uploadErr, setUploadErr] = useState<string | null>(null);
 
+  useEffect(() => {
+    store.fetchInterfaces();
+  }, []);
+
   const handleFile = async (file: File) => {
     if (!file.name.match(/\.pcap(ng)?$/i)) { setUploadErr('Only .pcap/.pcapng files'); return; }
     setUploading(true); setUploadErr(null);
@@ -42,9 +46,13 @@ function ControlPanel() {
             onChange={e => store.setActiveInterface(e.target.value)}
             disabled={mode !== null}
           >
-            {interfaces.map(i => (
-              <option key={i.name} value={i.name}>{i.description}</option>
-            ))}
+            {interfaces.length === 0 ? (
+              <option value="">Searching for interfaces...</option>
+            ) : (
+              interfaces.map(i => (
+                <option key={i.name} value={i.name}>{i.description}</option>
+              ))
+            )}
           </select>
         </div>
 

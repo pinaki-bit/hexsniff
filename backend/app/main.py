@@ -165,7 +165,7 @@ def _resolve_interfaces():
             ips = win.get('ips', [])
             # Filter to only IPv4 addresses
             ipv4_ips = [ip for ip in ips if '.' in ip]
-            ip = ipv4_ips[0] if ipv4_ips else 'No IP'
+            ip = _best_ip(ipv4_ips)
 
             # An interface is capture-capable ONLY if its GUID is in get_if_list()
             # or its friendly name maps to a known capture key
@@ -242,6 +242,31 @@ def _resolve_interfaces():
                 "npcap_available": bool(npcap_available),
             })
 
+    if not results and windows_ifaces:
+        for win in windows_ifaces:
+            name = win.get('name', '').strip()
+            description = win.get('description', name)
+            guid = win.get('guid', '')
+            ips = win.get('ips', [])
+            ipv4_ips = [ip for ip in ips if '.' in ip and not ip.startswith('127.') and not ip.startswith('169.254.')]
+            if not ipv4_ips and not any('.' in ip for ip in ips):
+                continue
+            ip = ipv4_ips[0] if ipv4_ips else 'No IP'
+            if "Wi-Fi" in description or "Wireless" in description:
+                description = f"📶 {description}"
+            elif "Ethernet" in description:
+                description = f"🖧 {description}"
+            elif "Loopback" in description:
+                description = f"🔄 {description}"
+            results.append({
+                "name": name,
+                "description": f"{description} ({ip})",
+                "ip": ip,
+                "capture_capable": True,
+                "guid": guid,
+                "npcap_available": bool(npcap_available),
+            })
+
     if not results:
         for name in get_if_list():
             results.append({
@@ -249,8 +274,9 @@ def _resolve_interfaces():
                 "capture_capable": True, "guid": "", "npcap_available": bool(npcap_available),
             })
 
-    # Sort: interfaces with active IPv4 addresses first, then by name
+    # Sort: interfaces with active routable IPv4 addresses first, then by name
     results.sort(key=lambda x: (
+        not _is_preferred_ip(x["ip"]),
         x["ip"] == "No IP" or x["ip"] == "Unknown",
         x["name"]
     ))
@@ -653,6 +679,15 @@ def live_sniff_worker(interface: str, stop_event: threading.Event, queue: Queue,
     captured_count = 0
     queued_count = 0
 
+    target_iface = interface
+    if interface in conf.ifaces:
+        target_iface = conf.ifaces[interface]
+    else:
+        for k, iface_obj in conf.ifaces.items():
+            if getattr(iface_obj, 'name', '') == interface or getattr(iface_obj, 'guid', '') == interface:
+                target_iface = iface_obj
+                break
+
     def packet_callback(pkt):
         nonlocal captured_count, queued_count
         try:
@@ -672,7 +707,7 @@ def live_sniff_worker(interface: str, stop_event: threading.Event, queue: Queue,
     try:
         while not stop_event.is_set():
             sniff(
-                iface=interface,
+                iface=target_iface,
                 prn=packet_callback,
                 timeout=1.0,
                 store=False
@@ -1068,6 +1103,10 @@ def get_debug_paths():
 
 if os.path.exists(frontend_dist) and os.path.isdir(frontend_dist):
     app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
+
+    @app.get("/")
+    async def serve_root():
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
 
     @app.get("/{full_path:path}")
     async def serve_spa(full_path: str):
